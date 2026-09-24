@@ -1,0 +1,870 @@
+/* =====================================================
+   AI FLOOD RISK PREDICTION
+   PREMIUM UI DESIGN
+   ===================================================== */
+
+
+/* =====================================================
+   GLOBAL
+   ===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(0, 174, 255, 0.10),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(76, 110, 245, 0.08),
+            transparent 30%
+        ),
+        #050b14;
+
+    color: #eaf4ff;
+
+    min-height: 100vh;
+
+    padding: 30px 20px;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+   ===================================================== */
+
+.container {
+    width: 100%;
+    max-width: 1180px;
+
+    margin: auto;
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.header {
+    position: relative;
+
+    padding: 30px 32px;
+
+    margin-bottom: 22px;
+
+    border: 1px solid rgba(80, 170, 255, 0.18);
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(12, 30, 50, 0.96),
+            rgba(7, 18, 32, 0.96)
+        );
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35),
+        inset 0 1px rgba(255, 255, 255, 0.04);
+
+    overflow: hidden;
+}
+
+
+.header::before {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    right: -100px;
+    top: -140px;
+
+    background: #00b7ff;
+
+    opacity: 0.10;
+
+    filter: blur(70px);
+
+    border-radius: 50%;
+}
+
+
+.header h1 {
+    position: relative;
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #58c7ff
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    margin-bottom: 7px;
+}
+
+
+.header p {
+    position: relative;
+
+    color: #8fa9c2;
+
+    font-size: 14px;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =====================================================
+   DASHBOARD CARD
+   ===================================================== */
+
+.dashboard-card {
+    background:
+        rgba(7, 18, 31, 0.88);
+
+    border:
+        1px solid rgba(87, 158, 214, 0.18);
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35),
+        inset 0 1px rgba(255, 255, 255, 0.025);
+
+    backdrop-filter: blur(20px);
+}
+
+
+/* =====================================================
+   LOCATION SECTION
+   ===================================================== */
+
+.location-section {
+    padding-bottom: 25px;
+
+    border-bottom:
+        1px solid rgba(107, 154, 194, 0.15);
+}
+
+
+.location-section > label {
+    display: block;
+
+    color: #d9eaff;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    margin-bottom: 18px;
+}
+
+
+.location-option {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13, 33, 53, 0.85),
+            rgba(8, 23, 39, 0.85)
+        );
+
+    border:
+        1px solid rgba(80, 170, 255, 0.14);
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    margin-bottom: 14px;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.location-option:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(0, 190, 255, 0.38);
+
+    box-shadow:
+        0 10px 35px rgba(0, 150, 255, 0.08);
+}
+
+
+.location-option h3 {
+    color: #e6f4ff;
+
+    font-size: 14px;
+
+    margin-bottom: 13px;
+}
+
+
+.location-option p {
+    color: #718ba5;
+
+    font-size: 12px;
+
+    margin-top: 9px;
+}
+
+
+/* =====================================================
+   LOCATION BUTTON
+   ===================================================== */
+
+.location-btn {
+    border: none;
+
+    outline: none;
+
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #078de1,
+            #00b8ff
+        );
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(0, 157, 255, 0.20);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+
+.location-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 174, 255, 0.35);
+
+    filter: brightness(1.08);
+}
+
+
+.location-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =====================================================
+   OR DIVIDER
+   ===================================================== */
+
+.location-divider {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin: 18px 0;
+
+    color: #587087;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+.location-divider::before,
+.location-divider::after {
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(93, 145, 185, 0.2)
+        );
+}
+
+
+.location-divider::after {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(93, 145, 185, 0.2),
+            transparent
+        );
+}
+
+
+/* =====================================================
+   MANUAL LOCATION
+   ===================================================== */
+
+.manual-location {
+    display: flex;
+
+    gap: 10px;
+}
+
+
+.manual-location input {
+    flex: 1;
+
+    min-width: 0;
+
+    background: #06111e;
+
+    border:
+        1px solid rgba(88, 151, 195, 0.25);
+
+    color: #e8f5ff;
+
+    padding: 12px 14px;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.manual-location input::placeholder {
+    color: #526a80;
+}
+
+
+.manual-location input:focus {
+    border-color: #10aeff;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 174, 255, 0.08);
+}
+
+
+/* =====================================================
+   SELECTED LOCATION
+   ===================================================== */
+
+.selected-location {
+    margin-top: 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.selected-location label {
+    color: #8098ad;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+
+.selected-location input {
+    flex: 1;
+
+    background:
+        rgba(0, 174, 255, 0.045);
+
+    border:
+        1px solid rgba(0, 174, 255, 0.15);
+
+    color: #55c9ff;
+
+    padding: 11px 13px;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   WEATHER SECTION
+   ===================================================== */
+
+.automatic-data {
+    margin-top: 25px;
+
+    padding-bottom: 25px;
+
+    border-bottom:
+        1px solid rgba(107, 154, 194, 0.15);
+}
+
+
+.automatic-data h3 {
+    color: #dceeff;
+
+    font-size: 15px;
+
+    margin-bottom: 15px;
+}
+
+
+.weather-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+
+.weather-box {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 18px;
+
+    min-height: 105px;
+
+    border-radius: 15px;
+
+    border:
+        1px solid rgba(76, 153, 205, 0.17);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10, 29, 47, 0.92),
+            rgba(6, 18, 31, 0.92)
+        );
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+.weather-box::after {
+    content: "";
+
+    position: absolute;
+
+    width: 90px;
+    height: 90px;
+
+    right: -40px;
+    bottom: -50px;
+
+    background: #00aeff;
+
+    opacity: 0.07;
+
+    filter: blur(25px);
+
+    border-radius: 50%;
+}
+
+
+.weather-box:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(0, 181, 255, 0.35);
+}
+
+
+.weather-box span {
+    display: block;
+
+    color: #7e99b1;
+
+    font-size: 12px;
+
+    margin-bottom: 12px;
+}
+
+
+.weather-box strong {
+    color: #40c3ff;
+
+    font-size: 22px;
+
+    font-weight: 750;
+}
+
+
+.weather-box:last-child {
+    grid-column: span 4;
+}
+
+
+/* =====================================================
+   PREDICTION SECTION
+   ===================================================== */
+
+.prediction-section {
+    margin-top: 25px;
+}
+
+
+.prediction-section h3 {
+    color: #e6f5ff;
+
+    font-size: 16px;
+
+    margin-bottom: 16px;
+}
+
+
+/* =====================================================
+   RISK DISPLAY
+   ===================================================== */
+
+.risk-display {
+    position: relative;
+
+    min-height: 190px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0, 170, 255, 0.11),
+            transparent 55%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(13, 33, 53, 0.95),
+            rgba(5, 17, 29, 0.95)
+        );
+
+    border:
+        1px solid rgba(73, 160, 218, 0.20);
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,0.03);
+}
+
+
+.risk-display::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(0, 185, 255, 0.12);
+
+    box-shadow:
+        0 0 70px rgba(0, 174, 255, 0.08);
+}
+
+
+.risk-display strong {
+    position: relative;
+
+    font-size: 52px;
+
+    line-height: 1;
+
+    font-weight: 850;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #39c4ff
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+
+.risk-display span {
+    position: relative;
+
+    margin-top: 12px;
+
+    padding: 7px 16px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(0, 174, 255, 0.08);
+
+    border:
+        1px solid rgba(0, 174, 255, 0.18);
+
+    color: #62cbff;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   PREDICTION DETAILS
+   ===================================================== */
+
+.prediction-details {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 12px;
+}
+
+
+.result-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 16px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(9, 25, 42, 0.85);
+
+    border:
+        1px solid rgba(74, 143, 190, 0.14);
+}
+
+
+.result-row span {
+    color: #718ba2;
+
+    font-size: 12px;
+}
+
+
+.result-row strong {
+    color: #dceeff;
+
+    font-size: 13px;
+
+    text-align: right;
+}
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+footer {
+    text-align: center;
+
+    padding: 25px 10px 5px;
+
+    color: #4f6d87;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+}
+
+
+footer p:first-child {
+    color: #6f8ca6;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   ANIMATION
+   ===================================================== */
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+.header,
+.dashboard-card {
+    animation:
+        fadeUp 0.6s ease both;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 900px) {
+
+    .weather-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .weather-box:last-child {
+        grid-column: span 2;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    body {
+        padding: 15px 10px;
+    }
+
+
+    .header {
+        padding: 22px;
+    }
+
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+
+    .dashboard-card {
+        padding: 18px;
+    }
+
+
+    .weather-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .weather-box:last-child {
+        grid-column: span 1;
+    }
+
+
+    .manual-location {
+        flex-direction: column;
+    }
+
+
+    .manual-location .location-btn {
+        width: 100%;
+    }
+
+
+    .selected-location {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .prediction-details {
+        grid-template-columns: 1fr;
+    }
+
+
+    .risk-display {
+        min-height: 170px;
+    }
+
+
+    .risk-display strong {
+        font-size: 45px;
+    }
+
+}

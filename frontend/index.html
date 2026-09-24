@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI Flood Risk Prediction</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- ============================= -->
+        <!-- HEADER -->
+        <!-- ============================= -->
+
+        <header class="header">
+
+            <h1>
+                🌊 AI Flood Risk Prediction
+            </h1>
+
+            <p>
+                AI-Based Localized Flood Risk Prediction System
+            </p>
+
+        </header>
+
+
+
+        <!-- ============================= -->
+        <!-- MAIN DASHBOARD -->
+        <!-- ============================= -->
+
+        <div class="dashboard-card">
+
+
+            <!-- ============================= -->
+            <!-- LOCATION SECTION -->
+            <!-- ============================= -->
+
+            <div class="location-section">
+
+
+                <label>
+                    📍 Flood Risk Location
+                </label>
+
+
+                <!-- AUTOMATIC LOCATION -->
+
+                <div class="location-option">
+
+                    <h3>
+                        📡 Automatic Location
+                    </h3>
+
+
+                    <button
+                        type="button"
+                        onclick="getMyLocation()"
+                        class="location-btn"
+                    >
+                        📍 Use My Current Location
+                    </button>
+
+
+                    <p id="locationStatus">
+                        Click to detect your current location.
+                    </p>
+
+                </div>
+
+
+
+                <!-- OR DIVIDER -->
+
+                <div class="location-divider">
+
+                    <span>
+                        OR
+                    </span>
+
+                </div>
+
+
+
+                <!-- MANUAL LOCATION -->
+
+                <div class="location-option">
+
+                    <h3>
+                        🔎 Manual Location
+                    </h3>
+
+
+                    <div class="manual-location">
+
+
+                        <input
+                            type="text"
+                            id="manualLocation"
+                            placeholder="Enter city or location"
+                        >
+
+
+                        <button
+                            type="button"
+                            onclick="searchManualLocation()"
+                            class="location-btn"
+                        >
+                            🔍 Search Location
+                        </button>
+
+
+                    </div>
+
+
+                    <p id="manualLocationStatus">
+                        Example: Coimbatore, Chennai, Madurai
+                    </p>
+
+                </div>
+
+
+
+                <!-- SELECTED LOCATION -->
+
+                <div class="selected-location">
+
+
+                    <label for="location">
+                        📌 Selected Location
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="location"
+                        placeholder="Selected location will appear here"
+                        readonly
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ============================= -->
+            <!-- AUTOMATIC WEATHER DATA -->
+            <!-- ============================= -->
+
+            <div class="automatic-data">
+
+
+                <h3>
+                    🌦 Automatic Weather Data
+                </h3>
+
+
+                <div class="weather-grid">
+
+
+                    <!-- RAINFALL -->
+
+                    <div class="weather-box">
+
+                        <span>
+                            🌧 Rainfall
+                        </span>
+
+                        <strong id="rainValue">
+                            -- mm
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- TEMPERATURE -->
+
+                    <div class="weather-box">
+
+                        <span>
+                            🌡 Temperature
+                        </span>
+
+                        <strong id="temperatureValue">
+                            -- °C
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- HUMIDITY -->
+
+                    <div class="weather-box">
+
+                        <span>
+                            💧 Humidity
+                        </span>
+
+                        <strong id="humidityValue">
+                            -- %
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- WIND -->
+
+                    <div class="weather-box">
+
+                        <span>
+                            🌬 Wind
+                        </span>
+
+                        <strong id="windValue">
+                            -- km/h
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- ELEVATION -->
+
+                    <div class="weather-box">
+
+                        <span>
+                            🏔 Elevation
+                        </span>
+
+                        <strong id="elevationValue">
+                            -- m
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ============================= -->
+            <!-- AI FLOOD PREDICTION -->
+            <!-- ============================= -->
+
+            <div class="prediction-section">
+
+
+                <h3>
+                    🤖 AI Flood Prediction
+                </h3>
+
+
+                <!-- RISK PERCENTAGE -->
+
+                <div class="risk-display">
+
+
+                    <strong id="riskPercent">
+                        --%
+                    </strong>
+
+
+                    <span id="riskLevel">
+                        Waiting
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- RESULT DETAILS -->
+
+                <div class="prediction-details">
+
+
+                    <div class="result-row">
+
+
+                        <span>
+                            📍 Location
+                        </span>
+
+
+                        <strong id="resultLocation">
+                            --
+                        </strong>
+
+
+                    </div>
+
+
+
+                    <div class="result-row">
+
+
+                        <span>
+                            ⚠️ Risk Level
+                        </span>
+
+
+                        <strong id="resultRisk">
+                            --
+                        </strong>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ============================= -->
+        <!-- FOOTER -->
+        <!-- ============================= -->
+
+        <footer>
+
+            <p>
+                AI Flood Risk Prediction System
+            </p>
+
+            <p>
+                Automatic Location • Weather Analysis • Flood Risk Prediction
+            </p>
+
+        </footer>
+
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================= -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>

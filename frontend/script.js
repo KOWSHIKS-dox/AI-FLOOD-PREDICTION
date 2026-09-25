@@ -4,9 +4,25 @@
 // =====================================================
 
 
-// -----------------------------------------------------
+// =====================================================
+// IMPORTANT: YOUR DEPLOYED FASTAPI BACKEND URL
+// =====================================================
+//
+// CHANGE ONLY THIS URL after your Render backend is ready.
+//
+// Example:
+// https://ai-flood-prediction-api.onrender.com
+//
+// DO NOT add /api/predict here.
+// =====================================================
+
+const API_BASE_URL =
+   "https://ai-flood-prediction-5.onrender.com";
+
+
+// =====================================================
 // GLOBAL LOCATION VARIABLES
-// -----------------------------------------------------
+// =====================================================
 
 let userLatitude = null;
 let userLongitude = null;
@@ -18,9 +34,12 @@ let userLongitude = null;
 
 function getMyLocation() {
 
-    const status = document.getElementById("locationStatus");
+    const status =
+        document.getElementById("locationStatus");
 
-    status.innerText = "📍 Detecting your current location...";
+    status.innerText =
+        "📍 Detecting your current location...";
+
 
     if (!navigator.geolocation) {
 
@@ -30,9 +49,10 @@ function getMyLocation() {
         return;
     }
 
+
     navigator.geolocation.getCurrentPosition(
 
-        async function (position) {
+        async function(position) {
 
             userLatitude =
                 position.coords.latitude;
@@ -40,51 +60,80 @@ function getMyLocation() {
             userLongitude =
                 position.coords.longitude;
 
-            console.log("Latitude:", userLatitude);
-            console.log("Longitude:", userLongitude);
+
+            console.log(
+                "Latitude:",
+                userLatitude
+            );
+
+            console.log(
+                "Longitude:",
+                userLongitude
+            );
+
 
             status.innerText =
                 "✅ Location detected. Getting weather...";
 
+
             await getWeatherAndPredict(
+
                 userLatitude,
+
                 userLongitude,
+
                 "Current Location"
+
             );
 
         },
 
-        function (error) {
 
-            console.error("Location Error:", error);
+        function(error) {
+
+            console.error(
+                "Location Error:",
+                error
+            );
+
 
             if (error.code === 1) {
 
                 status.innerText =
                     "❌ Location permission denied.";
 
-            } else if (error.code === 2) {
+            }
+
+            else if (error.code === 2) {
 
                 status.innerText =
                     "❌ Unable to determine your location.";
 
-            } else if (error.code === 3) {
+            }
+
+            else if (error.code === 3) {
 
                 status.innerText =
                     "❌ Location request timed out.";
 
-            } else {
+            }
+
+            else {
 
                 status.innerText =
                     "❌ Unable to get your location.";
+
             }
+
         },
+
 
         {
             enableHighAccuracy: true,
             timeout: 15000,
             maximumAge: 0
         }
+
     );
 }
 
@@ -96,18 +145,22 @@ function getMyLocation() {
 async function searchManualLocation() {
 
     const input =
-        document.getElementById("manualLocation");
+        document.getElementById(
+            "manualLocation"
+        );
+
 
     const status =
         document.getElementById(
             "manualLocationStatus"
         );
 
+
     const locationName =
         input.value.trim();
 
 
-    // Check empty input
+    // Check empty location
 
     if (locationName === "") {
 
@@ -126,16 +179,22 @@ async function searchManualLocation() {
 
     try {
 
-        // -------------------------------------------------
-        // OPEN-METEO GEOCODING API
-        // -------------------------------------------------
+        // =================================================
+        // OPEN-METEO GEOCODING
+        // =================================================
 
         const geocodingURL =
             "https://geocoding-api.open-meteo.com/v1/search" +
+
             "?name=" +
-            encodeURIComponent(locationName) +
+            encodeURIComponent(
+                locationName
+            ) +
+
             "&count=1" +
+
             "&language=en" +
+
             "&format=json";
 
 
@@ -146,7 +205,9 @@ async function searchManualLocation() {
 
 
         const response =
-            await fetch(geocodingURL);
+            await fetch(
+                geocodingURL
+            );
 
 
         if (!response.ok) {
@@ -162,14 +223,14 @@ async function searchManualLocation() {
 
 
         console.log(
-            "Location Search Result:",
+            "Location search result:",
             data
         );
 
 
-        // -------------------------------------------------
-        // CHECK RESULT
-        // -------------------------------------------------
+        // =================================================
+        // CHECK LOCATION RESULT
+        // =================================================
 
         if (
             !data.results ||
@@ -183,76 +244,85 @@ async function searchManualLocation() {
         }
 
 
-        // First matching location
-
         const result =
             data.results[0];
 
 
+        // =================================================
+        // SAVE COORDINATES
+        // =================================================
+
         userLatitude =
             result.latitude;
+
 
         userLongitude =
             result.longitude;
 
 
-        // Create readable location name
+        console.log(
+            "Selected Latitude:",
+            userLatitude
+        );
+
+
+        console.log(
+            "Selected Longitude:",
+            userLongitude
+        );
+
+
+        // =================================================
+        // CREATE READABLE LOCATION
+        // =================================================
 
         let readableLocation =
-            result.name || locationName;
+            result.name ||
+            locationName;
 
 
         if (result.admin1) {
 
             readableLocation +=
-                ", " + result.admin1;
+                ", " +
+                result.admin1;
         }
 
 
         if (result.country) {
 
             readableLocation +=
-                ", " + result.country;
+                ", " +
+                result.country;
         }
 
 
-        console.log(
-            "Selected Location:",
-            readableLocation
-        );
-
-        console.log(
-            "Latitude:",
-            userLatitude
-        );
-
-        console.log(
-            "Longitude:",
-            userLongitude
-        );
-
-
-        // -------------------------------------------------
-        // SHOW SELECTED LOCATION
-        // -------------------------------------------------
+        // =================================================
+        // DISPLAY SELECTED LOCATION
+        // =================================================
 
         document.getElementById(
             "location"
-        ).value = readableLocation;
+        ).value =
+            readableLocation;
 
 
         status.innerText =
             "✅ Location found. Getting weather...";
 
 
-        // -------------------------------------------------
+        // =================================================
         // GET WEATHER + FLOOD PREDICTION
-        // -------------------------------------------------
+        // =================================================
 
         await getWeatherAndPredict(
+
             userLatitude,
+
             userLongitude,
+
             readableLocation
+
         );
 
     }
@@ -274,13 +344,17 @@ async function searchManualLocation() {
 
 
 // =====================================================
-// 3. GET WEATHER DATA
+// 3. GET WEATHER + FLOOD PREDICTION
 // =====================================================
 
 async function getWeatherAndPredict(
+
     latitude,
+
     longitude,
+
     locationName
+
 ) {
 
     try {
@@ -291,9 +365,9 @@ async function getWeatherAndPredict(
         );
 
 
-        // -------------------------------------------------
-        // OPEN-METEO WEATHER API
-        // -------------------------------------------------
+        // =================================================
+        // WEATHER API
+        // =================================================
 
         const weatherURL =
             "https://api.open-meteo.com/v1/forecast" +
@@ -305,15 +379,23 @@ async function getWeatherAndPredict(
             longitude +
 
             "&current=" +
+
             "temperature_2m," +
+
             "relative_humidity_2m," +
+
             "precipitation," +
+
             "rain," +
+
             "wind_speed_10m" +
 
             "&hourly=" +
+
             "precipitation," +
+
             "rain," +
+
             "precipitation_probability" +
 
             "&forecast_days=1" +
@@ -328,7 +410,9 @@ async function getWeatherAndPredict(
 
 
         const weatherResponse =
-            await fetch(weatherURL);
+            await fetch(
+                weatherURL
+            );
 
 
         if (!weatherResponse.ok) {
@@ -357,25 +441,41 @@ async function getWeatherAndPredict(
             weather.current;
 
 
-        // -------------------------------------------------
-        // CALCULATE FORECAST RAINFALL
-        // -------------------------------------------------
+        // =================================================
+        // FORECAST RAINFALL
+        // =================================================
 
         let forecastRainfall = 0;
 
 
         if (
+
             weather.hourly &&
+
             weather.hourly.precipitation
+
         ) {
 
             forecastRainfall =
+
                 weather.hourly.precipitation
+
                     .reduce(
-                        (total, value) =>
-                            total + (value || 0),
+
+                        function(
+                            total,
+                            value
+                        ) {
+
+                            return total +
+                                (value || 0);
+
+                        },
+
                         0
+
                     );
+
         }
 
 
@@ -386,64 +486,86 @@ async function getWeatherAndPredict(
 
 
         // =================================================
-        // DISPLAY WEATHER
+        // DISPLAY LOCATION
         // =================================================
-
-
-        // Location
 
         document.getElementById(
             "location"
-        ).value = locationName;
+        ).value =
+            locationName;
 
 
-        // Rain
+        // =================================================
+        // DISPLAY RAINFALL
+        // =================================================
 
         document.getElementById(
             "rainValue"
         ).innerText =
-            (current.rain ?? 0) +
+
+            (
+                current.rain ?? 0
+            ) +
+
             " mm";
 
 
-        // Temperature
+        // =================================================
+        // DISPLAY TEMPERATURE
+        // =================================================
 
         document.getElementById(
             "temperatureValue"
         ).innerText =
+
             current.temperature_2m +
+
             " °C";
 
 
-        // Humidity
+        // =================================================
+        // DISPLAY HUMIDITY
+        // =================================================
 
         document.getElementById(
             "humidityValue"
         ).innerText =
+
             current.relative_humidity_2m +
+
             " %";
 
 
-        // Wind
+        // =================================================
+        // DISPLAY WIND
+        // =================================================
 
         document.getElementById(
             "windValue"
         ).innerText =
+
             current.wind_speed_10m +
+
             " km/h";
 
 
-        // Elevation
+        // =================================================
+        // DISPLAY ELEVATION
+        // =================================================
 
         document.getElementById(
             "elevationValue"
         ).innerText =
-            (weather.elevation ?? 0) +
+
+            (
+                weather.elevation ?? 0
+            ) +
+
             " m";
 
 
         // =================================================
-        // STATUS
+        // UPDATE LOCATION STATUS
         // =================================================
 
         const locationStatus =
@@ -451,10 +573,12 @@ async function getWeatherAndPredict(
                 "locationStatus"
             );
 
+
         if (locationStatus) {
 
             locationStatus.innerText =
-                "✅ Current location weather loaded.";
+                "✅ Weather data loaded successfully.";
+
         }
 
 
@@ -463,16 +587,20 @@ async function getWeatherAndPredict(
                 "manualLocationStatus"
             );
 
+
         if (manualStatus) {
 
             manualStatus.innerText =
+
                 "✅ Weather data loaded for " +
+
                 locationName;
+
         }
 
 
         // =================================================
-        // PREPARE FLOOD PREDICTION
+        // PREPARE FLOOD PREDICTION DATA
         // =================================================
 
         const predictionData = {
@@ -494,22 +622,36 @@ async function getWeatherAndPredict(
 
             elevation:
                 weather.elevation ?? 0
+
         };
 
 
         console.log(
-            "Prediction Data:",
+            "Prediction Input:",
             predictionData
         );
 
 
         // =================================================
-        // SEND TO FASTAPI
+        // CALL DEPLOYED FASTAPI BACKEND
         // =================================================
+
+        const predictionURL =
+            API_BASE_URL +
+            "/api/predict";
+
+
+        console.log(
+            "Prediction API:",
+            predictionURL
+        );
+
 
         const predictionResponse =
             await fetch(
-                "http://127.0.0.1:8000/api/predict",
+
+                predictionURL,
+
                 {
 
                     method: "POST",
@@ -518,22 +660,43 @@ async function getWeatherAndPredict(
 
                         "Content-Type":
                             "application/json"
+
                     },
 
                     body:
                         JSON.stringify(
                             predictionData
                         )
+
                 }
+
             );
 
+
+        // =================================================
+        // CHECK BACKEND RESPONSE
+        // =================================================
 
         if (!predictionResponse.ok) {
 
-            throw new Error(
-                "Flood prediction API failed. " +
-                predictionResponse.status
+            const errorText =
+                await predictionResponse.text();
+
+
+            console.error(
+                "Backend Error:",
+                errorText
             );
+
+
+            throw new Error(
+
+                "Flood prediction API failed. " +
+
+                predictionResponse.status
+
+            );
+
         }
 
 
@@ -548,37 +711,53 @@ async function getWeatherAndPredict(
 
 
         // =================================================
-        // DISPLAY PREDICTION
+        // DISPLAY RISK PERCENTAGE
         // =================================================
-
 
         document.getElementById(
             "riskPercent"
         ).innerText =
+
             prediction.risk_percentage +
+
             "%";
 
+
+        // =================================================
+        // DISPLAY RISK LEVEL
+        // =================================================
 
         document.getElementById(
             "riskLevel"
         ).innerText =
+
             prediction.risk_level;
 
+
+        // =================================================
+        // DISPLAY RESULT LOCATION
+        // =================================================
 
         document.getElementById(
             "resultLocation"
         ).innerText =
+
             prediction.location;
 
+
+        // =================================================
+        // DISPLAY RESULT RISK
+        // =================================================
 
         document.getElementById(
             "resultRisk"
         ).innerText =
+
             prediction.risk_level;
 
 
         console.log(
-            "✅ Flood prediction completed."
+            "✅ Flood prediction completed successfully."
         );
 
     }
@@ -601,18 +780,13 @@ async function getWeatherAndPredict(
         if (manualStatus) {
 
             manualStatus.innerText =
+
                 "❌ Weather loaded, but flood prediction server is unavailable.";
+
         }
 
-
-        // Don't erase weather data.
-        // Weather can still be displayed even
-        // when the prediction backend is offline.
-
-        console.log(
-            "Weather data was received, but prediction failed."
-        );
     }
+
 }
 
 
@@ -621,8 +795,10 @@ async function getWeatherAndPredict(
 // =====================================================
 
 document.addEventListener(
+
     "DOMContentLoaded",
-    function () {
+
+    function() {
 
         const input =
             document.getElementById(
@@ -633,19 +809,25 @@ document.addEventListener(
         if (input) {
 
             input.addEventListener(
+
                 "keydown",
-                function (event) {
+
+                function(event) {
 
                     if (
                         event.key === "Enter"
                     ) {
 
                         searchManualLocation();
+
                     }
 
                 }
+
             );
+
         }
 
     }
+
 );

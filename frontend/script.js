@@ -17,7 +17,7 @@
 // =====================================================
 
 const API_BASE_URL =
-    "https://AI-FLOOD-PREDICTION-5.onrender.com";
+    "https://ai-flood-prediction-api.onrender.com";
 
 
 // =====================================================
